@@ -1,1 +1,19 @@
 /* You can add global styles to this file, and also import other style files */
+
+/* Importing Bootstrap SCSS file. */
+@import '~bootstrap/scss/bootstrap';
+
+body, html {
+  width: 100%;
+}
+
+
+/*********************************************************************************************************/
+/*********************************************** VARIABLES ***********************************************/
+/*********************************************************************************************************/
+
+$header-background-color: rgb(23, 0, 66);
+
+.hub-header {
+  background-color: $header-background-color;
+}
