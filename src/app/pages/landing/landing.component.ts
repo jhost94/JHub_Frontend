@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CONSTANTS } from 'src/constants';
 
 @Component({
   selector: 'landing',
@@ -7,6 +8,8 @@ import { Component, OnInit } from '@angular/core';
 export class LandingComponent implements OnInit {
 
   streams: {name: string, link: string}[] = [];
+  translation = CONSTANTS.TRANSLATIONS;
+
   constructor() { }
 
   ngOnInit(): void {

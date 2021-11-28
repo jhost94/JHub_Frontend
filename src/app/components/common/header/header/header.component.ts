@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CONSTANTS } from 'src/constants';
 
 @Component({
@@ -7,12 +7,13 @@ import { CONSTANTS } from 'src/constants';
 })
 export class HeaderComponent implements OnInit {
 
-  name: string = 'hub';
+  name = CONSTANTS.SETTINGS.FRONTEND.NAME;
   links = CONSTANTS.SETTINGS.FRONTEND.ROUTES;
+  assets = CONSTANTS.ASSETS.LOGO;
+
   constructor() {}
 
   ngOnInit(): void {
-    this.name = CONSTANTS.SETTINGS.FRONTEND.NAME;
   }
 
 }

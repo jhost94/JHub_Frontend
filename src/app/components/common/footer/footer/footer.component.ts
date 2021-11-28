@@ -9,6 +9,7 @@ export class FooterComponent implements OnInit {
 
   name: string = 'hub';
   links = CONSTANTS.SETTINGS.FRONTEND.ROUTES;
+  assets = CONSTANTS.ASSETS.LOGO;
 
   constructor() {}
 

@@ -7,6 +7,9 @@ import { HeaderComponent } from './components/common/header/header/header.compon
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { LandingComponent } from './pages/landing/landing.component';
 import { FooterComponent } from './components/common/footer/footer/footer.component';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { CONSTANTS } from 'src/constants';
+import { LocaleControler } from './controler/locale.controler';
 
 @NgModule({
   declarations: [
@@ -18,9 +21,29 @@ import { FooterComponent } from './components/common/footer/footer/footer.compon
   imports: [
     BrowserModule,
     AppRoutingModule,
-    NgbModule
+    NgbModule,
+    TranslateModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+  availableLng = CONSTANTS.SETTINGS.FRONTEND.AVAILABLELANGS;
+  localeControler: LocaleControler;
+
+  constructor(translateService: TranslateService) {
+    this.localeControler = new LocaleControler(translateService);
+
+    //defines the default language
+    let tmpLng = this.availableLng[0];
+
+    //gets the default browser language
+    const currentLng = this.localeControler.browserDefaultLang;
+
+    if (this.availableLng.includes(currentLng)) {
+      tmpLng = currentLng;
+    }
+
+    translateService.setDefaultLang(tmpLng);
+  }
+}
