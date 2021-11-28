@@ -59,7 +59,7 @@ $secondary-hub-palette: (
     300 : #89cfd8,
     400 : #6fc4cf,
     500 : #56bac7,
-    600 : #4fb3c1,
+    600 : #d1a0ff,
     700 : #45abba,
     800 : #3ca3b3,
     900 : #2b94a6,
@@ -73,7 +73,7 @@ $secondary-hub-palette: (
         200 : #000000,
         300 : #000000,
         400 : #ffffff,
-        500 : #ffffff,
+        500 : #d1a0ff,
         600 : #ffffff,
         700 : #ffffff,
         800 : #ffffff,
@@ -94,35 +94,35 @@ $secondary-hub-palette: (
       $font-family: null,
       $letter-spacing: normal)
  * Test font: 'Brush Script MT'
- * Real font: Teko
+ * Real font: Exo
 */
 $hub-custom-typography-config: mat.define-typography-config(
   /* Project creation success?: mat-display-4 - 50px  */
-  $display-4: mat.define-typography-level(3.125rem, 3.813rem, $bold, $font-family: Teko, $letter-spacing: -0.05em),
+  $display-4: mat.define-typography-level(3.125rem, 3.813rem, $bold, $font-family: Exo, $letter-spacing: -0.05em),
   /* Plan title?: mat-display-3 - 48px  */
-  $display-3: mat.define-typography-level(3rem, 3.625rem, $bold, $font-family: Teko, $letter-spacing: 0),
+  $display-3: mat.define-typography-level(3rem, 3.625rem, $bold, $font-family: Exo, $letter-spacing: 0),
   /* Section title: mat-display-2 - 44px */
-  $display-2: mat.define-typography-level(2.75rem, 3.375rem, $semi-bold, $font-family: Teko, $letter-spacing: 0),
+  $display-2: mat.define-typography-level(2.75rem, 3.375rem, $semi-bold, $font-family: Exo, $letter-spacing: 0),
   /* Title : mat-display-1 - 40px */
-  $display-1: mat.define-typography-level(2.5rem, 3.0625rem, $bold, $font-family: Teko, $letter-spacing: 0),
+  $display-1: mat.define-typography-level(2.5rem, 3.0625rem, $bold, $font-family: Exo, $letter-spacing: 0),
   /* h1 - 34px*/
-  $headline:  mat.define-typography-level(2.125rem, 2.625rem, $semi-bold, $font-family: Teko, $letter-spacing: 0px),
+  $headline:  mat.define-typography-level(2.125rem, 2.625rem, $semi-bold, $font-family: Exo, $letter-spacing: 0px),
   /* h2 - 28px */
-  $title: mat.define-typography-level(1.75rem, 2.688rem, $regular, $font-family: Teko),
+  $title: mat.define-typography-level(1.75rem, 2.688rem, $regular, $font-family: Exo),
   /* h3 - 26px*/
-  $subheading-2:  mat.define-typography-level(1.625rem, 3.0625rem, $medium, $font-family: Teko, $letter-spacing: 0px),
+  $subheading-2:  mat.define-typography-level(1.625rem, 3.0625rem, $medium, $font-family: Exo, $letter-spacing: 0px),
   /* h4 - 22px*/
-  $subheading-1: mat.define-typography-level(1.375rem, 2.125rem, $medium, $font-family: Teko),
+  $subheading-1: mat.define-typography-level(1.375rem, 2.125rem, $medium, $font-family: Exo),
   /* body/regular text: mat-body - 18px*/
-  $body-1: mat.define-typography-level(1.125rem, 1.375rem, $regular, $font-family: Teko, $letter-spacing: 0px),
+  $body-1: mat.define-typography-level(1.125rem, 1.375rem, $regular, $font-family: Exo, $letter-spacing: 0px),
   /* bolder body text: mat-body-strong - 18px*/
-  $body-2: mat.define-typography-level(1.125rem, 1.375rem, $bold, $font-family: Teko),
+  $body-2: mat.define-typography-level(1.125rem, 1.375rem, $bold, $font-family: Exo),
   /* TO BE CHANGED caption: mat-caption - 18px */
-  $caption: mat.define-typography-level(1.125rem, 1.375rem, $medium, $font-family: Teko, $letter-spacing: 0px),
+  $caption: mat.define-typography-level(1.125rem, 1.375rem, $medium, $font-family: Exo, $letter-spacing: 0px),
   /* button - 18px */
-  $button: mat.define-typography-level(1.125rem, 1.375rem, $medium, $font-family: Teko, $letter-spacing: 0px),
+  $button: mat.define-typography-level(1.125rem, 1.375rem, $medium, $font-family: Exo, $letter-spacing: 0px),
   /* input - 18px */
-  $input: mat.define-typography-level(1.125rem, 1.375em, $medium, $font-family: Teko, $letter-spacing: 0px),
+  $input: mat.define-typography-level(1.125rem, 1.375em, $medium, $font-family: Exo, $letter-spacing: 0px),
 );
 
 /* Implementing the project palette into the theme */
@@ -133,7 +133,7 @@ $hub-custom-typography-config: mat.define-typography-config(
 /// @param {String | Number} $text "text" hue for this palette.
 /// @returns {Map} A complete Angular Material theming palette.
 $hub-primary: mat.define-palette($primary-hub-palette, 500, 200);
-$hub-accent: mat.define-palette($secondary-hub-palette, 500);
+$hub-accent: mat.define-palette($secondary-hub-palette, 600, 500);
 $hub-warn: mat.define-palette(mat.$red-palette, 500, A700);
 
 $hub-theme: mat.define-light-theme((
@@ -143,6 +143,15 @@ $hub-theme: mat.define-light-theme((
    warn: $hub-warn,
  )
 ));
+
+$hub-theme: mat.define-dark-theme((
+ color: (
+   primary: $hub-primary,
+   accent: $hub-accent,
+   warn: $hub-warn,
+ )
+));
+
 
 /* Glue all the configured styles above */
 /* Typography */

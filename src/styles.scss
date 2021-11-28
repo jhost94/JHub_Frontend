@@ -1,23 +1,31 @@
 @use 'theme.scss';
 /* Importing Bootstrap SCSS file. */
+
+$theme-colors: (
+  "primary": #350066,
+  "secondary": #a45fff
+);
+
 @import '~bootstrap/scss/bootstrap';
 
 /* font-family: 'Teko', sans-serif; */
 @import url('https://fonts.googleapis.com/css2?family=Teko:wght@300;400;500;600;700&display=swap');
+/* font-family: 'Exo', sans-serif; */
+@import url('https://fonts.googleapis.com/css2?family=Exo:wght@300;400;500;600;700&display=swap');
 
-body, html {
-  width: 100%;
-  font-family: Teko sans-serif !important;
-  font-weight: 300;
-}
+html, body { height: 100%; }
+body { margin: 0; font-family: Exo, Teko, Roboto, "Helvetica Neue", sans-serif; }
 
 
 /*********************************************************************************************************/
 /*********************************************** VARIABLES ***********************************************/
 /*********************************************************************************************************/
 
+$primary-color: #350066;
 $header-background-color: rgb(23, 0, 66);
-
+$croconana-color: #fffda2;
+$baby-ocean-blue-color: #60dfff;
+$light-blue-grey-color: #afc6cc;
 
 /*********************************************************************************************************/
 /******************************************** SPECIFIC CLASSES *******************************************/
@@ -28,5 +36,39 @@ $header-background-color: rgb(23, 0, 66);
   font-family: Teko sans-serif;
 }
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+.landing-page-background {
+  background-image: url("/assets/background/background_top_right_oval_blue.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-color: rgb(255, 255, 181);
+}
+
+/*********************************************************************************************************/
+/******************************************** GENERIC CLASSES ********************************************/
+/*********************************************************************************************************/
+
+.color-croconana {
+  color: $croconana-color;
+}
+
+.color-baby-ocean-blue {
+  color: $baby-ocean-blue-color;
+}
+
+.color-light-blue-grey {
+  color: $light-blue-grey-color;
+}
+
+.slighly-dark-background {
+  background-color: rgba($color: #000000, $alpha: 0.5);
+}
+
+/*********************************************************************************************************/
+/*************************************** BOOTSTRAP CLASSES PATCHES ***************************************/
+/*********************************************************************************************************/
+
+.list-group-item-secondary {
+  border: 1px solid $primary-color;
+  border-radius: 2px;
+}
