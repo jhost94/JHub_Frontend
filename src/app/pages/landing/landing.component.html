@@ -4,16 +4,14 @@
       <h1 class="text-center mt-5">
         This is the start of something BIG
       </h1>
-      <p class="mt-5 mb-0 text-center">This is a start of a BIG project, and this is its initial landing page.</p>
-      <p class="mt-0 text-center">This is nothing HUGE or INTERESTING, but its something until I have the patience to change it.</p>
+      <p class="mt-5 mb-0 text-center mat-body">This is a start of a BIG project, and this is its initial landing page.</p>
+      <p class="mt-0 text-center mat-body">This is nothing HUGE or INTERESTING, but its something until I have the patience to change it.</p>
     </div>
   </div>
+  <h3 class="text-center mt-5">While you wait for something, here're a few things I have for you</h3>
   <div class="row mt-5">
-    <h3>While you wait for something, here're a few things I have for you</h3>
-    <div class="col col-6 pr-5">
-      <h3>
-        A video of cute animals you ease your wait :)
-      </h3>
+    <div class="col col-6 pr-5 mx-0">
+      <h3>A video of cute animals you ease your wait :)</h3>
       <iframe
         width="560"
         height="315"
@@ -23,15 +21,18 @@
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
         allowfullscreen></iframe>
     </div>
-    <div class="col col-6 pl-5">
+    <div class="col col-6 pl-5 mx-0">
       <h3>
         Some amazing streammers:
-        <ul class="mt-5">
-          <li *ngFor="let s of streams">
-            <a [href]="s.link">{{ s.name }}</a>
-          </li>
-        </ul>
       </h3>
+        <div class="list-group list-group-flush">
+          <a
+          *ngFor="let s of streams"
+          [href]="s.link"
+          target="_blank"
+          class="list-group-item list-group-item-action list-group-item-primary"
+          >{{ s.name }}</a>
+        </div>
     </div>
   </div>
 </div>

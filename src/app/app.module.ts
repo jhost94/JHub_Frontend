@@ -10,6 +10,7 @@ import { FooterComponent } from './components/common/footer/footer/footer.compon
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { CONSTANTS } from 'src/constants';
 import { LocaleControler } from './controler/locale.controler';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { LocaleControler } from './controler/locale.controler';
     BrowserModule,
     AppRoutingModule,
     NgbModule,
-    TranslateModule.forRoot()
+    TranslateModule.forRoot(),
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

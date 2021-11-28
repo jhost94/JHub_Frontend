@@ -1,5 +1,4 @@
-/* You can add global styles to this file, and also import other style files */
-
+@use 'theme.scss';
 /* Importing Bootstrap SCSS file. */
 @import '~bootstrap/scss/bootstrap';
 
@@ -19,7 +18,15 @@ body, html {
 
 $header-background-color: rgb(23, 0, 66);
 
+
+/*********************************************************************************************************/
+/******************************************** SPECIFIC CLASSES *******************************************/
+/*********************************************************************************************************/
+
 .hub-header {
   background-color: $header-background-color;
   font-family: Teko sans-serif;
 }
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
