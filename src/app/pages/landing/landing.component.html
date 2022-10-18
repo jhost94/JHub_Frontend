@@ -29,11 +29,11 @@
         </h3>
           <div class="list-group list-group-flush">
             <a
-            *ngFor="let s of streams"
-            [href]="s.link"
-            target="_blank"
-            class="list-group-item list-group-item-action list-group-item-secondary mat-subheading-1 my-0"
-            ><img [src]="s.icon" [alt]="s.name" style="max-width: 50px; max-height: 50px; border-radius: 50%;" class="mr-3">{{ s.name }}</a>
+              *ngFor="let s of streams"
+              [href]="s.link"
+              target="_blank"
+              class="list-group-item list-group-item-action list-group-item-secondary mat-subheading-1 my-0"
+              ><img [src]="s.icon" [alt]="s.name" style="max-width: 50px; max-height: 50px; border-radius: 50%;" class="mr-3">{{ s.name }}</a>
           </div>
       </div>
     </div>

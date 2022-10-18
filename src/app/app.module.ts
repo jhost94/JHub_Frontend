@@ -11,13 +11,15 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { CONSTANTS } from 'src/constants';
 import { LocaleControler } from './controler/locale.controler';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BarComponent } from './components/common/sidebar/bar/bar.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     LandingComponent,
-    FooterComponent
+    FooterComponent,
+    BarComponent
   ],
   imports: [
     BrowserModule,
