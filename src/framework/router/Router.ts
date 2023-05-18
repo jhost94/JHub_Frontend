@@ -3,7 +3,11 @@ import Route from "./Route.js";
 
 class Router {
 
-    constructor(private navigation: Navigation, private navigator: Navigator, private location: Location, private internalRoutes: Route[] = [], private externalRoutes: Route[] = []) {
+    constructor(private navigation: Navigation, 
+                private navigator: Navigator, 
+                private location: Location, 
+                private internalRoutes: Map<string, Route> = new Map(), 
+                private externalRoutes: Map<string, Route> = new Map()) {
         console.log(this.navigator);
         console.log(this.location);
     }
@@ -22,6 +26,31 @@ class Router {
                 break;
             default:
                 throw `Unallowed NaviagtionType ${navigationOption.type}`
+        }
+    }
+
+    public addInternalRoute(id: string, route: Route): void {
+        this.internalRoutes.set(id, route);
+    }
+
+    public addExternalRoute(id: string, route: Route): void {
+        this.externalRoutes.set(id, route);
+    }
+
+    public getClipboard(): Clipboard {
+        return this.navigator.clipboard;
+    }
+
+    public getCurrentUrl(): string {
+        return this.location.href;
+    }
+
+    public async getClipboardText(): Promise<string> {
+        try {
+            return await this.navigator.clipboard.readText();
+        } catch (error) {
+            console.error(error);
+            return "";
         }
     }
 

@@ -47,7 +47,9 @@ class InitialConfiguration {
         const defaultPage = configOptions && configOptions.defaultPage ?  
             new InternalPage(eleBuilder.createElement(configOptions?.defaultPage?.getName()), configOptions?.defaultPage?.getName()) 
             : defaultConfig.defaultPage;
-        if (configOptions?.defaultPage) defaultPage.get().innerHTML = configOptions.defaultPage.getTemplate(); //TODO this is a quickfix, needs permanent solution
+        if (configOptions?.defaultPage) {
+            defaultPage.get().innerHTML = configOptions.defaultPage.getTemplate(); //TODO this is a quickfix, needs permanent solution~
+        }
 
         return {
             defaultPage: defaultPage,

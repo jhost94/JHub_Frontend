@@ -33,6 +33,7 @@
   },
   "homepage": "https://github.com/jhost94/JHub_Frontend#readme",
   "dependencies": {
-    "http-server": "^14.1.1"
+    "http-server": "^14.1.1",
+    "tslib": "^2.5.2"
   }
 }

@@ -1,6 +1,5 @@
 import InitialConfiguration, { ConfigurationOptions } from "./framework/Configuration.js";
 import Initializer from "./framework/Initializer.js";
-import Page from "./framework/components/Page.js";
 import Navigation from "./framework/router/Navigator.js";
 import Router from "./framework/router/Router.js";
 import LandingPage from "./index/pages/LandingPage.js";
