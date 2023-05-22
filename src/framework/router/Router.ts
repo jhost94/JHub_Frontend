@@ -1,5 +1,6 @@
 import Navigation from "./Navigator.js";
 import Route from "./Route.js";
+import { __awaiter } from "../../../node_modules/tslib";
 
 class Router {
 
@@ -13,16 +14,13 @@ class Router {
     }
 
     public navigate(navigationOption: NavigationOption): void {
-        const navigationMethod: NavigationMethod = {
-
-        };
 
         switch(navigationOption.type) {
             case "INTERNAL": 
-                this.navigateInternal(navigationMethod);
+                this.navigateInternal(navigationOption.id);
                 break;
             case "EXTERNAL": 
-                this.navigateExternal(navigationMethod);
+                this.navigateExternal(navigationOption.id);
                 break;
             default:
                 throw `Unallowed NaviagtionType ${navigationOption.type}`
@@ -54,22 +52,18 @@ class Router {
         }
     }
 
-    private navigateInternal(navigationMethod: NavigationMethod): void {
-
+    private navigateInternal(id: string): void {
+        this.internalRoutes.get(id)?.navigate(this.location);
     }
 
-    private navigateExternal(navigationMethod: NavigationMethod): void {
+    private navigateExternal(id: string): void {
 
     }
-}
-
-interface NavigationMethod {
-
 }
 
 interface NavigationOption {
     type: NavigationType,
-    id?: string
+    id: string
 }
 
 type NavigationType = "INTERNAL" | "EXTERNAL";

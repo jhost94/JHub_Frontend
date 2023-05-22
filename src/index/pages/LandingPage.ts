@@ -10,13 +10,13 @@ class LandingPage extends Page {
     private buildTemplate(): void {
         this.template = `
         <header>
-            test header
+            landing header
         </header>
         <navbar>
-            test navbar
+            landing navbar
         </navbar>
         <main>
-            test main content
+            landing main content
         </main>
         `;
     }
