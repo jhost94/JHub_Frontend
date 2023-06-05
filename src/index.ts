@@ -54,3 +54,6 @@ function render(): void {
     // console.log(Initializer.config())
     // window.location.assign("/test");
 }
+
+//TODO LIST:
+// - REMOVE REQUIREJS AND INTRODUCE CUSTOM AMD LOADER
