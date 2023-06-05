@@ -8,7 +8,7 @@ class Route {
     }
 
     public navigate(navigatable: Navigatable): void {
-
+        
     }
 }
 

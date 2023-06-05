@@ -1,6 +1,5 @@
 import Navigation from "./Navigator.js";
 import Route from "./Route.js";
-import { __awaiter } from "../../../node_modules/tslib";
 
 class Router {
 
