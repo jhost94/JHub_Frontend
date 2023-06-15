@@ -33,7 +33,8 @@ class Initializer {
         if (this.running()) throw "Application already running";
         if (Objects.isNull(this.configuration)) throw "Initial configuration not set";
         //test
-        this.render(this.config().defaultPageName)
+        // this.render(this.config().defaultPageName)
+        this.renderCurrentPage();
     }
 
     public static running(): boolean {
@@ -45,6 +46,7 @@ class Initializer {
     }
 
     public static render(id: string): void {
+        console.log(`Rendering id: ${id}`);
         PageRenderer.render(id);
         this.currentPageBeingRendered = id;
     }
@@ -55,6 +57,12 @@ class Initializer {
 
     public static getComponentBuilder(): ComponentBuilder {
         return this.componentBuilder;
+    }
+
+    private static renderCurrentPage(): void {
+        const currentPath = Initializer.router.getCurrentPageLocation().getPath();
+        const routeId = Initializer.router.findRouteIdByPath(currentPath);
+        if (routeId) this.render(routeId);
     }
 }
 

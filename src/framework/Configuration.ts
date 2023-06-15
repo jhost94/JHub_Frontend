@@ -35,7 +35,9 @@ class InitialConfiguration {
 
     private buildDefaultConfig(defaultElementBuilder: ElementVendor): Configuration {
         const ele = defaultElementBuilder.createElement(DefaultValues.DEFAULT_PAGE_ID);
+        const notFoundEle = defaultElementBuilder.createElement(DefaultValues.NOT_FOUND_PAGE_ID);
         return this.defaultConfiguration = { 
+            notFoundPage: new InternalPage(notFoundEle, DefaultValues.NOT_FOUND_PAGE_ID),
             defaultPage: new InternalPage(ele, DefaultValues.DEFAULT_PAGE_ID),
             defaultPageName: DefaultValues.DEFAULT_PAGE_ID,
             elementBuilder: defaultElementBuilder
@@ -47,11 +49,16 @@ class InitialConfiguration {
         const defaultPage = configOptions && configOptions.defaultPage ?  
             new InternalPage(eleBuilder.createElement(configOptions?.defaultPage?.getName()), configOptions?.defaultPage?.getName()) 
             : defaultConfig.defaultPage;
+        const notFoundPage = configOptions && configOptions.defaultPage ?  
+            new InternalPage(eleBuilder.createElement(configOptions?.notFoundPage?.getName()), configOptions?.notFoundPage?.getName()) 
+            : defaultConfig.defaultPage;
+        
         if (configOptions?.defaultPage) {
             defaultPage.get().innerHTML = configOptions.defaultPage.getTemplate(); //TODO this is a quickfix, needs permanent solution~
         }
 
         return {
+            notFoundPage: notFoundPage,
             defaultPage: defaultPage,
             defaultPageName: configOptions?.defaultPageName ?? defaultConfig.defaultPageName,
             elementBuilder: eleBuilder
@@ -60,12 +67,14 @@ class InitialConfiguration {
 }
 
 interface Configuration {
+    notFoundPage: InternalPage,
     defaultPage: InternalPage,
     defaultPageName: string,
     elementBuilder: ElementVendor
 }
 
 interface ConfigurationOptions {
+    notFoundPage: Page,
     defaultPage?: Page,
     defaultPageName?: string,
     elementBuilder?: ElementVendor

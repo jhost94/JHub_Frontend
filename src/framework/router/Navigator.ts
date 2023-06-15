@@ -3,7 +3,7 @@ class Navigation {
 }
 
 interface Navigatable {
-    assign(url: string): void
+    pushState(data: any, name: string, path: string): void
 }
 
 export default Navigation;

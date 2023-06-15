@@ -17,6 +17,7 @@ class LandingPage extends Page {
         </navbar>
         <main>
             landing main content
+            <input type='button' value="test">
         </main>
         `;
     }

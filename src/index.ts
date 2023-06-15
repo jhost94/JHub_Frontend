@@ -35,15 +35,20 @@ function render(): void {
     const testPage = new TestPage();
     // Routes
     // const testRoute = new Route("/test", testPage);
+    const routes: Map<string, Route> = new Map;
+    routes.set('test', new Route('/test', testPage)); 
     // Config
     const configOptions: ConfigurationOptions = {
+        notFoundPage: landingPage,
         defaultPage: landingPage,
         defaultPageName: landingPageName
     }
     const frameworkConfig = new InitialConfiguration(document, configOptions);
-    const router = new Router(new Navigation(), window.navigator, document.location);
+    const router = new Router(window.history, window.navigator, document.location, routes);
     
     Initializer.configure(frameworkConfig, router, body);
+    
+    //TODO: make sure pages is registered in PageRenderer class
     
     Initializer.init();
     window.addEventListener('popstate', () => {
@@ -52,7 +57,7 @@ function render(): void {
     });
     // router.addInternalRoute("test", testRoute);
     // console.log(Initializer.config())
-    // window.location.assign("/test");
+    // window.history.pushState({}, "name", "/test");
 }
 
 //TODO LIST:

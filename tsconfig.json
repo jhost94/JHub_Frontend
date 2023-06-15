@@ -24,8 +24,7 @@
   },
   "include": [
     "src/**/*.ts",
-    "src/require.js",
-    "node_modules/tslib/tslib.js"
+    "src/require.js"
   ],
   "exclude": [
     "dist",
