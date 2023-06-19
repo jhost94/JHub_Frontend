@@ -20,7 +20,7 @@ class PageRenderer {
 
     public static render(id: string = DefaultValues.DEFAULT_PAGE_ID): void {
         if (!this.pages.has(id)) throw "error";
-        console.log(this.pages.get(id)!.get())
+        console.log(this.pages.get(id)!.get());
         this.re.appendChild(this.pages.get(id)!.get());
     }
 }

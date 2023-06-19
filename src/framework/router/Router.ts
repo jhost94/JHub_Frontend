@@ -1,5 +1,4 @@
 import Objects from "src/utils/Objects.js";
-import Navigation from "./Navigator.js";
 import PageLocation from "./PageLocation.js";
 import Route from "./Route.js";
 
@@ -37,6 +36,10 @@ class Router {
         this.externalRoutes.set(id, route);
     }
 
+    /**
+     * Getters
+     */
+    
     public getClipboard(): Clipboard {
         return this.navigator.clipboard;
     }
@@ -66,12 +69,12 @@ class Router {
         return new PageLocation(this.location.origin, this.location.pathname.substring(1));
     }
 
-    private navigateInternal(id: string): void {
-        this.internalRoutes.get(id)?.navigate(this.navigation);
+    public getInternalRoutes(): Map<string, Route> {
+        return this.internalRoutes;
     }
-
-    private navigateExternal(id: string): void {
-
+    
+    public getExternalRoutes(): Map<string, Route> {
+        return this.externalRoutes;
     }
 
     public findRouteIdByPath(path: string): string | null{
@@ -97,6 +100,15 @@ class Router {
 
         return route;
     }
+    
+    private navigateInternal(id: string): void {
+        this.internalRoutes.get(id)?.navigate(this.navigation);
+    }
+
+    private navigateExternal(id: string): void {
+
+    }
+    
 }
 
 interface NavigationOption {

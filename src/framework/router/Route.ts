@@ -26,6 +26,14 @@ class Route {
         //TODO: check regexes for variables
         return sanitizedPath == sanitizedGivenPath;
     }
+
+    /**
+     * Getters
+     */
+
+    public getPage(): Page {
+        return this.page;
+    }
 }
 
 export default Route;

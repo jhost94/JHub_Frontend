@@ -21,7 +21,7 @@ class Initializer {
         this.componentBuilder = new ComponentBuilder(config.getElementBuilder());
         this.pageBuilder = new PageBuilder(config.getElementBuilder());
         PageRenderer.rootElement(rootElement);
-        PageRenderer.page(this.configuration.get("defaultPageName") as string, this.configuration.get("defaultPage") as InternalPage)
+        this.addPagesByRoutes();
     }
 
     public static updateConfig(name: keyof Configuration, value: any): void {
@@ -32,8 +32,6 @@ class Initializer {
     public static init(): void {
         if (this.running()) throw "Application already running";
         if (Objects.isNull(this.configuration)) throw "Initial configuration not set";
-        //test
-        // this.render(this.config().defaultPageName)
         this.renderCurrentPage();
     }
 
@@ -62,7 +60,16 @@ class Initializer {
     private static renderCurrentPage(): void {
         const currentPath = Initializer.router.getCurrentPageLocation().getPath();
         const routeId = Initializer.router.findRouteIdByPath(currentPath);
+        console.log("route id", routeId?.length)
         if (routeId) this.render(routeId);
+    }
+
+    private static addPagesByRoutes(): void {
+        PageRenderer.page("/", this.configuration.get("defaultPage") as InternalPage);
+        console.log(this.router.getInternalRoutes())
+        this.router.getInternalRoutes().forEach((v, k) => {
+            PageRenderer.page(k, Initializer.getPageBuilder().build(v.getPage()));
+        });
     }
 }
 

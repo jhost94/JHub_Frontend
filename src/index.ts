@@ -36,7 +36,8 @@ function render(): void {
     // Routes
     // const testRoute = new Route("/test", testPage);
     const routes: Map<string, Route> = new Map;
-    routes.set('test', new Route('/test', testPage)); 
+    routes.set('test', new Route('/test', testPage));
+    routes.set('', new Route('/', landingPage));
     // Config
     const configOptions: ConfigurationOptions = {
         notFoundPage: landingPage,
@@ -51,13 +52,6 @@ function render(): void {
     //TODO: make sure pages is registered in PageRenderer class
     
     Initializer.init();
-    window.addEventListener('popstate', () => {
-        const path = window.location.pathname;
-        console.log(path);
-    });
-    // router.addInternalRoute("test", testRoute);
-    // console.log(Initializer.config())
-    // window.history.pushState({}, "name", "/test");
 }
 
 //TODO LIST:
