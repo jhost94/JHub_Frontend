@@ -56,6 +56,7 @@ jobs:
       with:
         name: ${{ matrix.package_name }}
         path: ${{ matrix.build_dir }}
+        retention-days: 1
     
   deploy:
     name: Deploy
