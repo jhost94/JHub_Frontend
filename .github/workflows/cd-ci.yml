@@ -12,6 +12,8 @@ jobs:
   branch-name:
     name: Get branch name
     runs-on: ${{ matrix.os }}
+    outputs:
+      branch: ${{ steps.steextract_branch.outputs.branch }}
     strategy:
       matrix:
         node_version: ['18']
