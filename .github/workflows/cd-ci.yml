@@ -78,6 +78,7 @@ jobs:
     - name: Deploy to digital ocean
       run: |
         echo "$SSH_PRIVATE_KEY" > $SSH_KEY_FILE
+        sudo chmod 600 $SSH_KEY_FILE
         
       shell: bash
       env:
