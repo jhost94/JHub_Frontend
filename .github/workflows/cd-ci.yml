@@ -1,0 +1,63 @@
+on:
+  push:
+    branches:
+    - develop
+    - master
+  pull_request:
+    branches:
+    - main
+    - develop
+    
+jobs:
+  build:
+    name: Build
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        node_version: ['18']
+        os: [ubuntu-18.04]
+        build_dir: ['./dist']
+        package_name: ['build.zip']
+        package_full: ['${{ matrix.build_dir }}/${{ matrix.package_name }}']
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Use Node.js ${{ matrix.node_version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node_version }}
+
+    - name: npm install, build and test
+      run: |
+        npm install
+        npm run build
+        npm test
+       
+  package:
+    name: Package
+    runs-on: ${{ matrix.os }}
+    steps:
+    - uses: actions/checkout@v1
+    - name: Zip package
+      run: |
+        zip ${{ matrix.build_dir }} ${{ matrix.package_name }}
+    
+  deploy:
+    name: Deploy
+    runs-on: ${{ matrix.os }}
+    steps:
+    - uses: actions/checkout@v1
+    - name: Deploy to digital ocean
+      run: |
+        echo "$SSH_PRIVATE_KEY" > $SSH_KEY_FILE
+        sudo chmod 600 $SSH_KEY_FILE
+        scp $SSH_USER@$SSH_HOST $PACKAGE_URL $DEPLOY_URL -i $SSH_KEY_FILE
+      shell: bash
+      env:
+        SSH_USER: ${{ secrets.DIGITAL_OCEAN_USER }}
+        SSH_HOST: ${{ secrets.DIGITAL_OCEAN_HOST }}
+        SSH_KEY_FILE: private.key
+        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+        PACKAGE_URL: ${{ matrix.package_full }}
+        DEPLOY_URL: ${{ secrets.CLOUD_DEPLOY_URL }}/${{ matrix.package_name }}
+        
