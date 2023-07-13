@@ -34,6 +34,7 @@ jobs:
        
   package:
     name: Package
+    needs: build
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
@@ -50,6 +51,7 @@ jobs:
   deploy:
     name: Deploy
     runs-on: ${{ matrix.os }}
+    needs: package
     strategy:
       matrix:
         node_version: ['18']
