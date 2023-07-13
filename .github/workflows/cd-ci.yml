@@ -46,7 +46,7 @@ jobs:
     - uses: actions/checkout@v1
     - name: Zip package
       run: |
-        zip ${{ matrix.build_dir }} ${{ matrix.package_name }}
+        zip -r ${{ matrix.package_name }} ${{ matrix.build_dir }} 
     
   deploy:
     name: Deploy
