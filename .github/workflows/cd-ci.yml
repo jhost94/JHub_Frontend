@@ -35,6 +35,12 @@ jobs:
   package:
     name: Package
     runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        node_version: ['18']
+        os: [ubuntu-latest]
+        build_dir: ['./dist']
+        package_name: ['build.zip']
     steps:
     - uses: actions/checkout@v1
     - name: Zip package
@@ -44,6 +50,12 @@ jobs:
   deploy:
     name: Deploy
     runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        node_version: ['18']
+        os: [ubuntu-latest]
+        build_dir: ['./dist']
+        package_name: ['build.zip']
     steps:
     - uses: actions/checkout@v1
     - name: Deploy to digital ocean
