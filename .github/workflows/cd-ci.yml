@@ -1,0 +1,56 @@
+on:
+  push:
+    branches:
+    - develop
+    - master
+  pull_request:
+    branches:
+    - main
+    - develop
+    
+jobs:
+  build:
+    name: Build
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        node_version: ['18']
+        os: [ubuntu-18.04]
+        build_dir: ['./dist']
+        package_name: ['build.zip']
+        package_full: ['${{ matrix.build_dir }}/${{ matrix.package_name }}']
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Use Node.js ${{ matrix.node_version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node_version }}
+
+    - name: npm install, build and test
+      run: |
+        npm install
+        npm run build
+        npm test
+       
+  package:
+    name: Package
+    runs-on: ${{ matrix.os }}
+    steps:
+    - uses: actions/checkout@v1
+    - name: Zip package
+      run: |
+        zip ${{ matrix.build_dir }} ${{ matrix.package_name }}
+    
+  deploy:
+    name: Deploy
+    runs-on: ${{ matrix.os }}
+    steps:
+    - uses: actions/checkout@v1
+    - name: Use ssh key
+      with:
+        ssh-private-key: ${{ secrets.DEPLOY_KEY }}
+   
+    - name: Deploy to digital ocean
+      run: |
+        scp ${{ secrets.DIGITAL_OCEAN_USER }}@${{ secrets.DIGITAL_OCEAN_HOST }} ${{ matrix.package_full }} ${{ secrets.CLOUD_DEPLOY_URL }}/${{ matrix.package_name }}
