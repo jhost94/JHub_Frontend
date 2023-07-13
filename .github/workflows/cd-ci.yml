@@ -9,11 +9,11 @@ on:
     - develop
     
 jobs:
-  branch-name:
-    name: Get branch name
+  setup:
+    name: Workflow setup
     runs-on: ${{ matrix.os }}
     outputs:
-      branch: ${{ steps.steextract_branch.outputs.branch }}
+      branch: ${{ steps.extract_branch.outputs.branch }}
     strategy:
       matrix:
         node_version: ['18']
@@ -30,7 +30,7 @@ jobs:
   build:
     name: Build
     runs-on: ${{ matrix.os }}
-    needs: branch-name
+    needs: setup
     strategy:
       matrix:
         node_version: ['18']
@@ -39,7 +39,7 @@ jobs:
         package_name: ['build.zip']
 
     steps:
-    - uses: actions/checkout@${{ jobs.branch-name.outputs.branch }}
+    - uses: ./
     - name: Use Node.js ${{ matrix.node_version }}
       uses: actions/setup-node@v1
       with:
@@ -62,7 +62,7 @@ jobs:
         build_dir: ['./dist']
         package_name: ['build.zip']
     steps:
-    - uses: actions/checkout@${{ jobs.branch-name.outputs.branch }}
+    - uses: ./
     - name: Zip package
       run: |
         echo $(ls)
@@ -79,7 +79,7 @@ jobs:
         build_dir: ['./dist']
         package_name: ['build.zip']
     steps:
-    - uses: actions/checkout@${{ jobs.branch-name.outputs.branch }}
+    - uses: ./
     - name: Deploy to digital ocean
       run: |
         echo "$SSH_PRIVATE_KEY" > $SSH_KEY_FILE
