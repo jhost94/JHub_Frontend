@@ -9,8 +9,8 @@ on:
     - develop
     
 jobs:
-  build:
-    name: Build
+  branch-name:
+    name: Get branch name
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
@@ -20,7 +20,24 @@ jobs:
         package_name: ['build.zip']
 
     steps:
-    - uses: actions/checkout@v1
+    - name: Extract branch name
+      shell: bash
+      run: echo "branch=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_OUTPUT
+      id: extract_branch
+       
+  build:
+    name: Build
+    runs-on: ${{ matrix.os }}
+    needs: branch-name
+    strategy:
+      matrix:
+        node_version: ['18']
+        os: [ubuntu-latest]
+        build_dir: ['./dist']
+        package_name: ['build.zip']
+
+    steps:
+    - uses: actions/checkout@${{ jons.branch-name.outputs.branch }}
     - name: Use Node.js ${{ matrix.node_version }}
       uses: actions/setup-node@v1
       with:
@@ -43,7 +60,7 @@ jobs:
         build_dir: ['./dist']
         package_name: ['build.zip']
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@${{ jons.branch-name.outputs.branch }}
     - name: Zip package
       run: |
         echo $(ls)
@@ -60,7 +77,7 @@ jobs:
         build_dir: ['./dist']
         package_name: ['build.zip']
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@${{ jons.branch-name.outputs.branch }}
     - name: Deploy to digital ocean
       run: |
         echo "$SSH_PRIVATE_KEY" > $SSH_KEY_FILE
