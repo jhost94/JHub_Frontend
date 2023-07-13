@@ -79,7 +79,7 @@ jobs:
       run: |
         echo "$SSH_PRIVATE_KEY" > $SSH_KEY_FILE
         sudo chmod 600 $SSH_KEY_FILE
-        
+        scp $SSH_USER@$SSH_HOST $PACKAGE_URL $DEPLOY_URL -i ./$SSH_KEY_FILE
       shell: bash
       env:
         SSH_USER: ${{ secrets.DIGITAL_OCEAN_USER }}
