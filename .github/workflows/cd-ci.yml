@@ -39,7 +39,7 @@ jobs:
         package_name: ['build.zip']
 
     steps:
-    - uses: ./
+    - uses: actions/checkout@v1
     - name: Use Node.js ${{ matrix.node_version }}
       uses: actions/setup-node@v1
       with:
@@ -50,28 +50,17 @@ jobs:
         npm install
         npm install -g typescript
         npm run build
-       
-  package:
-    name: Package
-    needs: build
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        node_version: ['18']
-        os: [ubuntu-latest]
-        build_dir: ['./dist']
-        package_name: ['build.zip']
-    steps:
-    - uses: ./
-    - name: Zip package
-      run: |
-        echo $(ls)
-        zip -r ${{ matrix.package_name }} ${{ matrix.build_dir }} 
+        zip -r ${{ matrix.package_name }} ${{ matrix.build_dir }}
+    
+    - uses: actions/upload-artifact@v1
+      with:
+        name: ${{ matrix.package_name }}
+        path: ${{ matrix.build_dir }}
     
   deploy:
     name: Deploy
     runs-on: ${{ matrix.os }}
-    needs: package
+    needs: build
     strategy:
       matrix:
         node_version: ['18']
@@ -79,7 +68,12 @@ jobs:
         build_dir: ['./dist']
         package_name: ['build.zip']
     steps:
-    - uses: ./
+    - uses: actions/download-artifact@v1
+      with:
+        name: ${{ matrix.package_name }}
+        path: ${{ matrix.build_dir }}
+      
+    - uses: actions/checkout@v1
     - name: Deploy to digital ocean
       run: |
         echo "$SSH_PRIVATE_KEY" > $SSH_KEY_FILE
