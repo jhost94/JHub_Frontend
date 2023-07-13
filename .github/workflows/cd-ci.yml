@@ -47,10 +47,17 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
     - uses: actions/checkout@v1
-    - name: Use ssh key
-      with:
-        ssh-private-key: ${{ secrets.DEPLOY_KEY }}
-   
     - name: Deploy to digital ocean
       run: |
-        scp ${{ secrets.DIGITAL_OCEAN_USER }}@${{ secrets.DIGITAL_OCEAN_HOST }} ${{ matrix.package_full }} ${{ secrets.CLOUD_DEPLOY_URL }}/${{ matrix.package_name }}
+        echo "$SSH_PRIVATE_KEY" > $SSH_KEY_FILE
+        sudo chmod 600 $SSH_KEY_FILE
+        scp $SSH_USER@$SSH_HOST $PACKAGE_URL $DEPLOY_URL -i $SSH_KEY_FILE
+      shell: bash
+      env:
+        SSH_USER: ${{ secrets.DIGITAL_OCEAN_USER }}
+        SSH_HOST: ${{ secrets.DIGITAL_OCEAN_HOST }}
+        SSH_KEY_FILE: private.key
+        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+        PACKAGE_URL: ${{ matrix.package_full }}
+        DEPLOY_URL: ${{ secrets.CLOUD_DEPLOY_URL }}/${{ matrix.package_name }}
+        
