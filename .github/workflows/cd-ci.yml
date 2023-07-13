@@ -78,13 +78,16 @@ jobs:
     - name: Deploy to digital ocean
       run: |
         echo "$SSH_PRIVATE_KEY" > $SSH_KEY_FILE
+        echo "$SSH_KNOWN_HOSTS" > $SSH_KNOWN_HOSTS_FILE
         sudo chmod 600 $SSH_KEY_FILE
-        scp -i $SSH_KEY_FILE $PACKAGE_URL $SSH_USER@$SSH_HOST:$DEPLOY_URL
+        scp -i $SSH_KEY_FILE -o UserKnownHostsFile=$SSH_KNOWN_HOSTS_FILE $PACKAGE_URL $SSH_USER@$SSH_HOST:$DEPLOY_URL
       shell: bash
       env:
         SSH_USER: ${{ secrets.DIGITAL_OCEAN_USER }}
         SSH_HOST: ${{ secrets.DIGITAL_OCEAN_HOST }}
+        SSH_KNOWN_HOSTS: ${{ secrets.SSH_KNOWN_HOSTS }}
         SSH_KEY_FILE: pk
+        SSH_KNOWN_HOSTS_FILE: kh
         SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
         PACKAGE_URL: ./${{ matrix.package_name }}
         DEPLOY_URL: ${{ secrets.CLOUD_DEPLOY_URL }}/${{ matrix.package_name }}
