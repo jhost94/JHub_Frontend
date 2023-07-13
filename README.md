@@ -1,3 +1,3 @@
 # CoreFrontend
 
-JHub front end.
+JHub front end with pipeline.
