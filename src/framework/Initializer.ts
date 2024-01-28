@@ -29,6 +29,13 @@ class Initializer {
         this.configuration.set(name, value);
     }
 
+    /**
+     * Init initializes the application and creates a context.
+     * This context is used everywhere on the app.
+     * TODO:
+     *      - Create said context.
+     *      - Optimize context, it might be too heavy on bigger apps
+     */
     public static init(): void {
         if (this.running()) throw "Application already running";
         if (Objects.isNull(this.configuration)) throw "Initial configuration not set";
@@ -61,8 +68,12 @@ class Initializer {
         const currentPath = Initializer.router.getCurrentPageLocation().getPath();
         const routeId = Initializer.router.findRouteIdByPath(currentPath);
         console.log("route id", routeId?.length)
-        if (routeId) this.render(routeId);
-    }
+        if (routeId) {
+            this.render(routeId);
+        } else {
+            this.render(this.configuration.getConfig().defaultPageName);
+        }
+    } 
 
     private static addPagesByRoutes(): void {
         PageRenderer.page("/", this.configuration.get("defaultPage") as InternalPage);

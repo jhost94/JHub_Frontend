@@ -43,6 +43,7 @@ function render(): void {
     const configOptions: ConfigurationOptions = {
         notFoundPage: landingPage,
         defaultPage: landingPage,
+        // Do I need a page name? isn't that in the page itself?
         defaultPageName: landingPageName
     }
     const frameworkConfig = new InitialConfiguration(document, configOptions);

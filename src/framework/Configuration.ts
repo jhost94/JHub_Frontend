@@ -60,7 +60,7 @@ class InitialConfiguration {
         return {
             notFoundPage: notFoundPage,
             defaultPage: defaultPage,
-            defaultPageName: configOptions?.defaultPageName ?? defaultConfig.defaultPageName,
+            defaultPageName: configOptions?.notFoundPage?.getName() ?? defaultConfig.defaultPageName,
             elementBuilder: eleBuilder
         }
     }

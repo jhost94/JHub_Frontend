@@ -46,6 +46,7 @@ class Router {
     private findInternalRouteIdByPath(path: string): string | null {
         let route: string | null = null;
         this.internalRoutes.getRoutes().forEach((r, k) => {
+            // Optimize, because this will always iterate over the entire map
             if (r.pathMatches(path) && Objects.isNull(route)) route = k; 
         });
 
@@ -55,6 +56,7 @@ class Router {
     private findExternalRouteIdByPath(path: string): string | null{
         let route: string | null = null;
         this.internalRoutes.getRoutes().forEach((r, k) => {
+            // Optimize, because this will always iterate over the entire map
             if (r.pathMatches(path) && Objects.isNull(route)) route = k;
         });
 
