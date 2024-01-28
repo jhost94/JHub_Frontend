@@ -17,6 +17,8 @@ class TestPage extends Page {
             </navbar>
             <main>
                 test main content
+                <button type="button">Click Me!</button>
+                <a href="/test2">test2</a> 
             </main>
             `;
         }

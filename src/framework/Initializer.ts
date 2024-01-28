@@ -67,7 +67,7 @@ class Initializer {
     private static addPagesByRoutes(): void {
         PageRenderer.page("/", this.configuration.get("defaultPage") as InternalPage);
         console.log(this.router.getInternalRoutes())
-        this.router.getInternalRoutes().forEach((v, k) => {
+        this.router.getInternalRoutes().getRoutes().forEach((v, k) => {
             PageRenderer.page(k, Initializer.getPageBuilder().build(v.getPage()));
         });
     }

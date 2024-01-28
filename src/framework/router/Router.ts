@@ -1,6 +1,7 @@
 import Objects from "src/utils/Objects.js";
 import PageLocation from "./PageLocation.js";
 import Route from "./Route.js";
+import Routes from "./Routes.js";
 
 class Router {
     private interval: number = 0;
@@ -8,8 +9,8 @@ class Router {
     constructor(private navigation: History, 
                 private navigator: Navigator, 
                 private location: Location, 
-                private internalRoutes: Map<string, Route> = new Map(), 
-                private externalRoutes: Map<string, Route> = new Map()) {
+                private internalRoutes: Routes = new Routes(), 
+                private externalRoutes: Routes = new Routes()) {
         console.log(this.navigator);
         console.log(this.location);
     }
@@ -28,13 +29,46 @@ class Router {
         }
     }
 
-    public addInternalRoute(id: string, route: Route): void {
-        this.internalRoutes.set(id, route);
+    public addInternalRoute(route: Route): void {
+        this.internalRoutes.setRoute(route);
     }
 
     public addExternalRoute(id: string, route: Route): void {
-        this.externalRoutes.set(id, route);
+        this.externalRoutes.setRoute(route);
     }
+
+    public findRouteIdByPath(path: string): string | null{
+        const internalRoute = this.findInternalRouteIdByPath(path);
+        if (Objects.isNull(this.internalRoutes)) return internalRoute;
+        return this.findExternalRouteIdByPath(path);
+    }
+
+    private findInternalRouteIdByPath(path: string): string | null {
+        let route: string | null = null;
+        this.internalRoutes.getRoutes().forEach((r, k) => {
+            if (r.pathMatches(path) && Objects.isNull(route)) route = k; 
+        });
+
+        return route;
+    }
+
+    private findExternalRouteIdByPath(path: string): string | null{
+        let route: string | null = null;
+        this.internalRoutes.getRoutes().forEach((r, k) => {
+            if (r.pathMatches(path) && Objects.isNull(route)) route = k;
+        });
+
+        return route;
+    }
+    
+    private navigateInternal(id: string): void {
+        this.internalRoutes.getRoutes().get(id)?.navigate(this.navigation);
+    }
+
+    private navigateExternal(id: string): void {
+
+    }
+    
 
     /**
      * Getters
@@ -69,46 +103,13 @@ class Router {
         return new PageLocation(this.location.origin, this.location.pathname.substring(1));
     }
 
-    public getInternalRoutes(): Map<string, Route> {
+    public getInternalRoutes(): Routes {
         return this.internalRoutes;
     }
     
-    public getExternalRoutes(): Map<string, Route> {
+    public getExternalRoutes(): Routes {
         return this.externalRoutes;
     }
-
-    public findRouteIdByPath(path: string): string | null{
-        const internalRoute = this.findInternalRouteIdByPath(path);
-        if (Objects.isNull(this.internalRoutes)) return internalRoute;
-        return this.findExternalRouteIdByPath(path);
-    }
-
-    private findInternalRouteIdByPath(path: string): string | null {
-        let route: string | null = null;
-        this.internalRoutes.forEach((r, k) => {
-            if (r.pathMatches(path) && Objects.isNull(route)) route = k; 
-        });
-
-        return route;
-    }
-
-    private findExternalRouteIdByPath(path: string): string | null{
-        let route: string | null = null;
-        this.internalRoutes.forEach((r, k) => {
-            if (r.pathMatches(path) && Objects.isNull(route)) route = k;
-        });
-
-        return route;
-    }
-    
-    private navigateInternal(id: string): void {
-        this.internalRoutes.get(id)?.navigate(this.navigation);
-    }
-
-    private navigateExternal(id: string): void {
-
-    }
-    
 }
 
 interface NavigationOption {

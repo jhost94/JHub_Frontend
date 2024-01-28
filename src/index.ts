@@ -3,6 +3,7 @@ import Initializer from "./framework/Initializer.js";
 import Navigation from "./framework/router/Navigator.js";
 import Route from "./framework/router/Route.js";
 import Router from "./framework/router/Router.js";
+import Routes from "./framework/router/Routes.js";
 import LandingPage from "./index/pages/LandingPage.js";
 import TestPage from "./index/pages/TestPage.js";
 
@@ -35,9 +36,9 @@ function render(): void {
     const testPage = new TestPage();
     // Routes
     // const testRoute = new Route("/test", testPage);
-    const routes: Map<string, Route> = new Map;
-    routes.set('test', new Route('/test', testPage));
-    routes.set('', new Route('/', landingPage));
+    const routes = new Routes();
+    routes.setRoute(new Route('/test', testPage));
+    routes.setRoute(new Route('/', landingPage));
     // Config
     const configOptions: ConfigurationOptions = {
         notFoundPage: landingPage,
