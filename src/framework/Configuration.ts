@@ -2,6 +2,7 @@ import Objects from "../utils/Objects.js";
 import Page from "./components/Page.js";
 import InternalPage from "./components/internal/InternalPage.js";
 import DefaultValues from "./constants/DefaultValues.js";
+import { LOGGING_LEVEL } from "./debug/Logger.js";
 import ElementVendor from "./requirements/ElementVendor.js";
 
 class InitialConfiguration {
@@ -40,7 +41,8 @@ class InitialConfiguration {
             notFoundPage: new InternalPage(notFoundEle, DefaultValues.NOT_FOUND_PAGE_ID),
             defaultPage: new InternalPage(ele, DefaultValues.DEFAULT_PAGE_ID),
             defaultPageName: DefaultValues.DEFAULT_PAGE_ID,
-            elementBuilder: defaultElementBuilder
+            elementBuilder: defaultElementBuilder,
+            logLevel: 'ERROR'
         }
     }
 
@@ -61,7 +63,8 @@ class InitialConfiguration {
             notFoundPage: notFoundPage,
             defaultPage: defaultPage,
             defaultPageName: configOptions?.notFoundPage?.getName() ?? defaultConfig.defaultPageName,
-            elementBuilder: eleBuilder
+            elementBuilder: eleBuilder,
+            logLevel: configOptions?.logLevel ?? defaultConfig.logLevel
         }
     }
 }
@@ -70,14 +73,16 @@ interface Configuration {
     notFoundPage: InternalPage,
     defaultPage: InternalPage,
     defaultPageName: string,
-    elementBuilder: ElementVendor
+    elementBuilder: ElementVendor,
+    logLevel: LOGGING_LEVEL
 }
 
 interface ConfigurationOptions {
     notFoundPage: Page,
     defaultPage?: Page,
     defaultPageName?: string,
-    elementBuilder?: ElementVendor
+    elementBuilder?: ElementVendor,
+    logLevel?: LOGGING_LEVEL
 }
 
 export default InitialConfiguration;

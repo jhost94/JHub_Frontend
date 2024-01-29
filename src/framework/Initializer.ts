@@ -5,6 +5,7 @@ import PageRenderer from "./renderers/PageRenderer.js";
 import PageBuilder from "./builders/PageBuilder.js";
 import ComponentBuilder from "./builders/ComponentBuilder.js";
 import InternalPage from "./components/internal/InternalPage.js";
+import Logger from "./debug/Logger.js";
 
 class Initializer {
     private static configuration: InitialConfiguration;
@@ -39,6 +40,8 @@ class Initializer {
     public static init(): void {
         if (this.running()) throw "Application already running";
         if (Objects.isNull(this.configuration)) throw "Initial configuration not set";
+
+        Logger.init(this.config().logLevel);
         this.renderCurrentPage();
     }
 
@@ -67,7 +70,7 @@ class Initializer {
     private static renderCurrentPage(): void {
         const currentPath = Initializer.router.getCurrentPageLocation().getPath();
         const routeId = Initializer.router.findRouteIdByPath(currentPath);
-        console.log("route id", routeId?.length)
+        Logger.log('DEBUG', ["route id", routeId?.length])
         if (routeId) {
             this.render(routeId);
         } else {

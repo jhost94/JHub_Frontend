@@ -1,6 +1,7 @@
 import Page from '../components/Page.js';
 import InternalPage from '../components/internal/InternalPage.js';
 import DefaultValues from '../constants/DefaultValues.js';
+import Logger from '../debug/Logger.js';
 
 class PageRenderer {
     private static pages: Map<string, InternalPage> = new Map();
@@ -19,9 +20,8 @@ class PageRenderer {
     }
 
     public static render(id: string = DefaultValues.DEFAULT_PAGE_ID): void {
-        console.log(this.pages);
         if (!this.pages.has(id)) throw "error";
-        console.log(this.pages.get(id)!.get());
+        Logger.log('DEBUG', this.pages.get(id)!.get());
         this.re.appendChild(this.pages.get(id)!.get());
     }
 }

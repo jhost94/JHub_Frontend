@@ -44,7 +44,8 @@ function render(): void {
         notFoundPage: landingPage,
         defaultPage: landingPage,
         // Do I need a page name? isn't that in the page itself?
-        defaultPageName: landingPageName
+        defaultPageName: landingPageName,
+        logLevel: 'DEBUG'
     }
     const frameworkConfig = new InitialConfiguration(document, configOptions);
     const router = new Router(window.history, window.navigator, document.location, routes);
