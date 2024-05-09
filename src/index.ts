@@ -1,4 +1,5 @@
 import InitialConfiguration, { ConfigurationOptions } from "./framework/Configuration.js";
+import Context from "./framework/Context.js";
 import Initializer from "./framework/Initializer.js";
 import Navigation from "./framework/router/Navigator.js";
 import Route from "./framework/router/Route.js";
@@ -55,6 +56,9 @@ function render(): void {
     //TODO: make sure pages is registered in PageRenderer class
     
     Initializer.init();
+    Context.system().wait(1000, () => {
+            Context.render(Initializer.config().defaultPageName);
+        });
 }
 
 //TODO LIST:

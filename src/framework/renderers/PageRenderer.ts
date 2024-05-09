@@ -1,7 +1,7 @@
-import Page from '../components/Page.js';
 import InternalPage from '../components/internal/InternalPage.js';
 import DefaultValues from '../constants/DefaultValues.js';
 import Logger from '../debug/Logger.js';
+import Renderer from './Renderer.js';
 
 class PageRenderer {
     private static pages: Map<string, InternalPage> = new Map();
@@ -22,7 +22,16 @@ class PageRenderer {
     public static render(id: string = DefaultValues.DEFAULT_PAGE_ID): void {
         if (!this.pages.has(id)) throw "error";
         Logger.log('DEBUG', this.pages.get(id)!.get());
-        this.re.appendChild(this.pages.get(id)!.get());
+        Renderer.renderAt(this.pages.get(id)!.get(), this.re);
+    }
+
+    public static refresh(): void {
+        Renderer.refreshAt(this.re);
+    }
+
+    public static rerender(id: string = DefaultValues.DEFAULT_PAGE_ID): void {
+        this.refresh();
+        this.render(id);
     }
 }
 

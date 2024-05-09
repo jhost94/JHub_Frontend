@@ -6,7 +6,7 @@ class TestPage extends Page {
         constructor() {
             super("testPage");
             this.buildTemplate();
-            this.test();
+            //this.test();
         }
     
         private buildTemplate(): void {

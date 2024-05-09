@@ -6,6 +6,8 @@ import PageBuilder from "./builders/PageBuilder.js";
 import ComponentBuilder from "./builders/ComponentBuilder.js";
 import InternalPage from "./components/internal/InternalPage.js";
 import Logger from "./debug/Logger.js";
+import Context from "./Context.js";
+import ElementRenderer from "./renderers/ElementRenderer.js";
 
 class Initializer {
     private static configuration: InitialConfiguration;
@@ -16,7 +18,7 @@ class Initializer {
     private static componentBuilder: ComponentBuilder;
 
     public static configure(config: InitialConfiguration, router: Router, rootElement: Element): void {
-        if (Objects.nonNull(this.configuration)) throw "Initial configuration already done.";
+        if (Objects.nonNull(this.configuration)) throw new GenericException(ExceptionConstants.CODE.BASE, "Initial configuration already done.");
         this.configuration = config;
         this.router = router;
         this.componentBuilder = new ComponentBuilder(config.getElementBuilder());
@@ -26,7 +28,7 @@ class Initializer {
     }
 
     public static updateConfig(name: keyof Configuration, value: any): void {
-        if (Objects.diferentType(this.configuration.get(name), value)) throw "Diferent type of config value";
+        if (Objects.diferentType(this.configuration.get(name), value)) throw new GenericException(ExceptionConstants.CODE.BASE, "Diferent type of config value");
         this.configuration.set(name, value);
     }
 
@@ -38,10 +40,10 @@ class Initializer {
      *      - Optimize context, it might be too heavy on bigger apps
      */
     public static init(): void {
-        if (this.running()) throw "Application already running";
-        if (Objects.isNull(this.configuration)) throw "Initial configuration not set";
-
+        if (this.running()) throw new GenericException(ExceptionConstants.CODE.BASE, "Application already running");
+        if (Objects.isNull(this.configuration)) throw new GenericException(ExceptionConstants.CODE.BASE, "Initial configuration not set");
         Logger.init(this.config().logLevel);
+        Context.init({router: this.router, pageRenderer: PageRenderer, elementRenderer: ElementRenderer});
         this.renderCurrentPage();
     }
 
@@ -54,8 +56,7 @@ class Initializer {
     }
 
     public static render(id: string): void {
-        console.log(`Rendering id: ${id}`);
-        PageRenderer.render(id);
+        PageRenderer.rerender(id);
         this.currentPageBeingRendered = id;
     }
 
@@ -80,7 +81,6 @@ class Initializer {
 
     private static addPagesByRoutes(): void {
         PageRenderer.page("/", this.configuration.get("defaultPage") as InternalPage);
-        console.log(this.router.getInternalRoutes())
         this.router.getInternalRoutes().getRoutes().forEach((v, k) => {
             PageRenderer.page(k, Initializer.getPageBuilder().build(v.getPage()));
         });
