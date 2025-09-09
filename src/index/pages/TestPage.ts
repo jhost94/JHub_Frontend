@@ -1,5 +1,4 @@
-import Initializer from "src/framework/Initializer";
-import Page from "src/framework/components/Page";
+import Page from "@jhub-center/jhostify-script/framework/components/Page";
 
 class TestPage extends Page {
     
@@ -26,7 +25,7 @@ class TestPage extends Page {
         }
 
         private test(): void {
-            setTimeout(() => {Initializer.render(Initializer.config().defaultPageName)}, 2000);
+            //setTimeout(() => {Initializer.render(Initializer.config().defaultPageName)}, 2000);
         }
 }
 

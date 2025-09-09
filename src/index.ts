@@ -1,12 +1,12 @@
-import InitialConfiguration, { ConfigurationOptions } from "./framework/Configuration.js";
-import Context from "./framework/Context.js";
-import Initializer from "./framework/Initializer.js";
-import Navigation from "./framework/router/Navigator.js";
-import Route from "./framework/router/Route.js";
-import Router from "./framework/router/Router.js";
-import Routes from "./framework/router/Routes.js";
-import LandingPage from "./index/pages/LandingPage.js";
-import TestPage from "./index/pages/TestPage.js";
+import Routes from "@jhub-center/jhostify-script/framework/router/Routes";
+import LandingPage from "./index/pages/LandingPage";
+import TestPage from "./index/pages/TestPage";
+import InitialConfiguration, { ConfigurationOptions } from "@jhub-center/jhostify-script/framework/Configuration";
+import Route from "@jhub-center/jhostify-script/framework/router/Route";
+import Router from "@jhub-center/jhostify-script/framework/router/Router";
+import Initializer from "@jhub-center/jhostify-script/framework/Initializer";
+import Context from "@jhub-center/jhostify-script/framework/Context";
+
 
 const id = setInterval(() => {if (docReady() && dependeciesReady()) stop()}, 0);
 
@@ -27,7 +27,7 @@ function requireReady(): boolean {
     return require !== undefined/* && define !== undefined*/;
 }
 
-function render(): void {
+export function render(): void {
     const body = document.body;
 
     const landingPageName = "landingPage"

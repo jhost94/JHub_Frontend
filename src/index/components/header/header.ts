@@ -1,7 +1,7 @@
-import Component from "../../../framework/components/Component.js";
-import ElementVendor from "../../../framework/requirements/ElementVendor.js";
-import Initializer from "src/framework/Initializer.js";
-import InternalComponent from "src/framework/components/internal/InternalComponent.js";
+import ElementVendor from "@jhub-center/jhostify-script/framework/requirements/ElementVendor";
+import InternalComponent from "@jhub-center/jhostify-script/framework/components/internal/InternalComponent";
+import Component from "@jhub-center/jhostify-script/framework/components/Component";
+import Initializer from "@jhub-center/jhostify-script/framework/Initializer";
 
 function header(elementBuilder: ElementVendor): InternalComponent {
     const template = `
