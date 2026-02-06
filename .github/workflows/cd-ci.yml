@@ -52,7 +52,7 @@ jobs:
         npm run build
         zip -r ${{ matrix.package_name }} ${{ matrix.build_dir }}
     
-    - uses: actions/upload-artifact@v1
+    - uses: actions/upload-artifact@v4
       with:
         name: ${{ matrix.package_name }}
         path: ${{ matrix.build_dir }}
@@ -69,7 +69,7 @@ jobs:
         build_dir: ['./dist']
         package_name: ['build.zip']
     steps:
-    - uses: actions/download-artifact@v1
+    - uses: actions/download-artifact@v4
       with:
         name: ${{ matrix.package_name }}
         path: ${{ matrix.build_dir }}
