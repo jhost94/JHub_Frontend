@@ -2,7 +2,6 @@
   "compileOnSave": false,
   "compilerOptions": {
     "baseUrl": "./",
-    "outDir": "./dist",
     "forceConsistentCasingInFileNames": true,
     "strict": true,
     "noImplicitReturns": true,
@@ -14,14 +13,18 @@
     "moduleResolution": "node",
     "importHelpers": true,
     "target": "ES6",
-    // "module": "es2020",
+    "module": "AMD",
+    "outFile": "./dist/index.js",
     "lib": [
       "es2018",
+      "ES5",
+      "ES6",
       "dom"
     ]
   },
   "include": [
-    "src/**/*.ts"
+    "src/**/*.ts",
+    "src/require.js"
   ],
   "exclude": [
     "dist",
