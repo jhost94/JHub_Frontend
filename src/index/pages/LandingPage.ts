@@ -1,4 +1,4 @@
-import Page from "../../framework/components/Page.js";
+import Page from "@jhub-center/jhostify-script/framework/components/Page";
 
 class LandingPage extends Page {
 
@@ -10,13 +10,14 @@ class LandingPage extends Page {
     private buildTemplate(): void {
         this.template = `
         <header>
-            test header
+            landing header
         </header>
         <navbar>
-            test navbar
+            landing navbar
         </navbar>
         <main>
-            test main content
+            landing main content
+            <input type='button' value="test">
         </main>
         `;
     }
