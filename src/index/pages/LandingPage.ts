@@ -1,4 +1,4 @@
-import Page from "@jhub-center/jhostify-script/framework/components/Page";
+import Page from "@jhub-center/jhostify-script/framework/page/external/Page";
 
 class LandingPage extends Page {
 
