@@ -1,6 +1,8 @@
 import Component from "@jhub-center/jhostify-script/framework/components/external/Component";
 import Page from "@jhub-center/jhostify-script/framework/page/external/Page";
-import Div from "@jhub-center/jhostify-script/framework/components/external/Div";
+import Div from "@jhub-center/jhostify-script/framework/components/external/formatting/Div";
+import Button from "@jhub-center/jhostify-script/framework/components/external/form/Button";
+
 
 class LandingPage extends Page {
 
@@ -20,6 +22,11 @@ class LandingPage extends Page {
         d3.content("inside div2");
         d3.backgroundColor("red");
         d2.children().push(d3);
+
+        const b1 = new Button();
+        b1.content("test");
+        b1.draggable("true");
+        components.push(b1);
         super("landingPage69", components);
     }
 
