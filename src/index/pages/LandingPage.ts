@@ -10,6 +10,7 @@ import H1 from "@jhub-center/jhostify-script/framework/components/external/text/
 import H2 from "@jhub-center/jhostify-script/framework/components/external/text/H2";
 import H3 from "@jhub-center/jhostify-script/framework/components/external/text/H3";
 import A from "@jhub-center/jhostify-script/framework/components/external/link/A";
+import Css from "@jhub-center/jhostify-script/framework/components/external/Css";
 
 class LandingPage extends Page {
 
@@ -51,7 +52,7 @@ class LandingPage extends Page {
         s1.children().push(s1H2);
         
         const s1P = new P();
-        s1P.content("Your central place for innovation, development, and creativity.");
+        s1P.content("Something amazing is being built, please be patient!");
         s1.children().push(s1P);
         
         const s1A = new A();
@@ -110,7 +111,119 @@ class LandingPage extends Page {
         components.push(s1);
         components.push(s2);
         components.push(footer);
-        super("landingPage", components);
+
+        const css = new Css(`/* Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #1e1e1e; /* Dark Grey */
+    color: #e0e0e0;
+    line-height: 1.6;
+}
+
+/* Header */
+header {
+    background-color: #2a2a2a;
+    padding: 20px 10%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid #4b0082; /* Dark Purple */
+}
+
+header h1 {
+    color: #9b59ff;
+    font-size: 28px;
+}
+
+nav a {
+    color: #ccc;
+    text-decoration: none;
+    margin-left: 20px;
+    transition: 0.3s;
+}
+
+nav a:hover {
+    color: #9b59ff;
+}
+
+/* Hero Section */
+.hero {
+    text-align: center;
+    padding: 100px 20px;
+    background: linear-gradient(135deg, #1e1e1e, #2b003b);
+}
+
+.hero h2 {
+    font-size: 40px;
+    margin-bottom: 20px;
+    color: #ffffff;
+}
+
+.hero p {
+    margin-bottom: 30px;
+    font-size: 30px;
+    color: #bbbbbb;
+}
+
+.btn {
+    display: inline-block;
+    padding: 12px 30px;
+    background-color: #4b0082;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: 0.3s;
+}
+
+.btn:hover {
+    background-color: #6a0dad;
+}
+
+/* Content Section */
+.content {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    padding: 60px 10%;
+    flex-wrap: wrap;
+}
+
+.card {
+    background-color: #2a2a2a;
+    padding: 30px;
+    border-radius: 8px;
+    width: 280px;
+    border: 1px solid #4b0082;
+    transition: 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    border-color: #9b59ff;
+}
+
+.card h3 {
+    margin-bottom: 15px;
+    color: #9b59ff;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 20px;
+    background-color: #2a2a2a;
+    border-top: 2px solid #4b0082;
+    font-size: 14px;
+    color: #888;
+}`);
+
+        super("landingPage", components, css);
     }
 
 }
