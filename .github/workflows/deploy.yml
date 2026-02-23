@@ -75,6 +75,7 @@ jobs:
     - uses: actions/checkout@v4
     - name: Deploy to digital ocean
       run: |
+        mkdir -p ~/.ssh
         echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
         ssh-keyscan ${{ secrets.DIGITAL_OCEAN_HOST }} >> ~/.ssh/known_hosts
         scp $PACKAGE_URL $SSH_USER@$SSH_HOST:$DEPLOY_URL
