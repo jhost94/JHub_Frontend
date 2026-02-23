@@ -73,7 +73,6 @@ jobs:
         name: ${{ matrix.package_name }}
         path: ${{ matrix.build_dir }}
       
-    - uses: actions/checkout@v4
     - name: Deploy to digital ocean
       run: |
         mkdir -p ~/.ssh
