@@ -2,11 +2,10 @@ on:
   push:
     branches:
     - master
-    - develop
+    - devops/pipeline
   pull_request:
     branches:
     - master
-    - develop
     
 jobs:
   setup:
@@ -39,16 +38,15 @@ jobs:
         package_name: ['build.zip']
 
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v4
     - name: Use Node.js ${{ matrix.node_version }}
-      uses: actions/setup-node@v1
+      uses: actions/setup-node@v1 
       with:
         node-version: ${{ matrix.node_version }}
 
     - name: npm install, build and test
       run: |
         npm install
-        npm install -g typescript
         npm run build
         zip -r ${{ matrix.package_name }} ${{ matrix.build_dir }}
     
@@ -74,21 +72,20 @@ jobs:
         name: ${{ matrix.package_name }}
         path: ${{ matrix.build_dir }}
       
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v4
     - name: Deploy to digital ocean
       run: |
-        echo "$SSH_PRIVATE_KEY" > $SSH_KEY_FILE
-        echo "$SSH_KNOWN_HOSTS" > $SSH_KNOWN_HOSTS_FILE
-        sudo chmod 600 $SSH_KEY_FILE
-        scp -i $SSH_KEY_FILE -o UserKnownHostsFile=$SSH_KNOWN_HOSTS_FILE $PACKAGE_URL $SSH_USER@$SSH_HOST:$DEPLOY_URL
+        echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+        ssh-keyscan ${{ secrets.DIGITAL_OCEAN_HOST }} >> ~/.ssh/known_hosts
+        scp $PACKAGE_URL $SSH_USER@$SSH_HOST:$DEPLOY_URL
       shell: bash
       env:
         SSH_USER: ${{ secrets.DIGITAL_OCEAN_USER }}
         SSH_HOST: ${{ secrets.DIGITAL_OCEAN_HOST }}
-        SSH_KNOWN_HOSTS: ${{ secrets.SSH_KNOWN_HOSTS }}
-        SSH_KEY_FILE: pk
-        SSH_KNOWN_HOSTS_FILE: kh
-        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
         PACKAGE_URL: ${{ matrix.build_dir }}/${{ matrix.package_name }}
         DEPLOY_URL: ${{ secrets.CLOUD_DEPLOY_URL }}/${{ matrix.package_name }}
-        
+
+    - name: Run remote script
+      run: |
+        ssh ${{ secrets.DIGITAL_OCEAN_USER }}@${{ secrets.DIGITAL_OCEAN_HOST }} \
+        "/home/jhub/test.sh"
