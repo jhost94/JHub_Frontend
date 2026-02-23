@@ -50,10 +50,10 @@ jobs:
         npm run build
         zip -r ${{ matrix.package_name }} ${{ matrix.build_dir }}
     
-    - uses: actions/upload-artifact@v4
+    - uses: actions/upload-artifact@v5
       with:
         name: ${{ matrix.package_name }}
-        path: ${{ matrix.build_dir }}
+        path: ${{ matrix.package_name }}
         retention-days: 1
     
   deploy:
