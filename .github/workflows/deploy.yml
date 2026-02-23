@@ -67,7 +67,8 @@ jobs:
         build_dir: ['./dist']
         package_name: ['build.zip']
     steps:
-    - uses: actions/download-artifact@v5
+    - name: Download build
+      uses: actions/download-artifact@v5
       id: deploy-download
       with:
         name: ${{ matrix.package_name }}
@@ -79,6 +80,8 @@ jobs:
         echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
         chmod 600 ~/.ssh/id_rsa
         ssh-keyscan ${{ secrets.DIGITAL_OCEAN_HOST }} >> ~/.ssh/known_hosts
+        ls ${{ steps.deploy-download.outputs.download-path }}
+        ls -R $GITHUB_WORKSPACE
         scp $PACKAGE_URL $SSH_USER@$SSH_HOST:$DEPLOY_URL
       shell: bash
       env:
