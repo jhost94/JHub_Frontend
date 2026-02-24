@@ -26,6 +26,7 @@ jobs:
         node_version: ['18']
         os: [ubuntu-latest]
         build_dir: ['./dist']
+        package_name: ['build.zip']
 
     steps:
     - name: Setup Pages
@@ -35,14 +36,14 @@ jobs:
       uses: actions/download-artifact@v5
       id: deploy-download
       with:
-        name: ${{ needs.build.outputs.artifact-name }}
+        name: ${{ matrix.package_name }}
         path: ${{ matrix.build_dir }}
       
     - name: Unzip
       run: |
         unzip $PACKAGE_URL -d $GITHUB_WORKSPACE/site
       env:
-        PACKAGE_URL: ${{ steps.deploy-download.outputs.download-path }}/${{ needs.build.outputs.artifact-name }}
+        PACKAGE_URL: ${{ steps.deploy-download.outputs.download-path }}/${{ matrix.package_name  }}
 
     - name: Upload Pages artifact
       uses: actions/upload-pages-artifact@v4

@@ -55,5 +55,5 @@ jobs:
     - uses: actions/upload-artifact@v4
       with:
         name: ${{ matrix.package_name }}
-        path: ${{ matrix.build_dir }}
+        path: ${{ matrix.package_name }}
         retention-days: 1
