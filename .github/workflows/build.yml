@@ -1,5 +1,9 @@
 name: Build
 
+concurrency:
+  group: ${{ github.ref_name }}
+  cancel-in-progress: false
+
 on:
   workflow_call:
 
