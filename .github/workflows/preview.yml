@@ -9,6 +9,10 @@ on:
     - master
     - develop
 
+permissions:
+  id-token: write
+  pages: write
+
 jobs:
   setup:
     name: Workflow setup
