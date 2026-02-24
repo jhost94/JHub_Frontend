@@ -6,7 +6,7 @@ on:
   pull_request:
     branches:
     - master
-    
+
 jobs:
   setup:
     name: Workflow setup
@@ -80,8 +80,6 @@ jobs:
         echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
         chmod 600 ~/.ssh/id_rsa
         ssh-keyscan ${{ secrets.DIGITAL_OCEAN_HOST }} >> ~/.ssh/known_hosts
-        ls ${{ steps.deploy-download.outputs.download-path }}
-        ls -R $GITHUB_WORKSPACE
         scp $PACKAGE_URL $SSH_USER@$SSH_HOST:$DEPLOY_URL
       shell: bash
       env:
