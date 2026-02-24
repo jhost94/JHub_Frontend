@@ -1,0 +1,58 @@
+on:
+  push:
+    branches:
+    - master
+    - develop
+
+permissions:
+  id-token: write
+  pages: write
+
+jobs:
+  build:
+    uses: ./.github/workflows/build.yml
+
+  deploy:
+    name: Deploy
+    runs-on: ${{ matrix.os }}
+    needs: build
+    strategy:
+      matrix:
+        node_version: ['18']
+        os: [ubuntu-latest]
+        build_dir: ['./dist']
+        package_name: ['build.zip']
+
+    steps:
+    - name: Setup Pages
+      uses: actions/configure-pages@v5
+
+    - name: Download build
+      uses: actions/download-artifact@v5
+      id: deploy-download
+      with:
+        name: ${{ matrix.package_name }}
+        path: ${{ matrix.build_dir }}
+      
+    - name: Unzip
+      run: |
+        unzip $PACKAGE_URL -d $GITHUB_WORKSPACE/site
+      env:
+        PACKAGE_URL: ${{ steps.deploy-download.outputs.download-path }}/${{ matrix.package_name  }}
+
+    - name: Upload Pages artifact
+      uses: actions/upload-pages-artifact@v4
+      with:
+        path: ${{ github.workspace }}/site/dist
+        
+    - name: Deploy
+      id: pages-deploy
+      uses: actions/deploy-pages@v4
+
+    - name: Verify
+      run: |
+        echo ####################################################################
+        echo ####################################################################
+        echo ${{ steps.pages-deploy.outputs.page_url }}
+        echo ####################################################################
+        echo ####################################################################

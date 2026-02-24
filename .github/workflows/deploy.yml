@@ -1,0 +1,45 @@
+on:
+  push:
+    branches:
+    - master
+
+jobs:
+  build:
+    uses: ./.github/workflows/build.yml
+
+  deploy:
+    name: Deploy
+    runs-on: ${{ matrix.os }}
+    needs: build
+    strategy:
+      matrix:
+        node_version: ['18']
+        os: [ubuntu-latest]
+        build_dir: ['./dist']
+        package_name: ['build.zip']
+    steps:
+    - name: Download build
+      uses: actions/download-artifact@v5
+      id: deploy-download
+      with:
+        name: ${{ matrix.package_name }}
+        path: ${{ matrix.build_dir }}
+      
+    - name: Deploy to digital ocean
+      run: |
+        mkdir -p ~/.ssh
+        echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+        chmod 600 ~/.ssh/id_rsa
+        ssh-keyscan ${{ secrets.DIGITAL_OCEAN_HOST }} >> ~/.ssh/known_hosts
+        scp $PACKAGE_URL $SSH_USER@$SSH_HOST:$DEPLOY_URL
+      shell: bash
+      env:
+        SSH_USER: ${{ secrets.DIGITAL_OCEAN_USER }}
+        SSH_HOST: ${{ secrets.DIGITAL_OCEAN_HOST }}
+        PACKAGE_URL: ${{ steps.deploy-download.outputs.download-path }}/${{ matrix.package_name }}
+        DEPLOY_URL: ${{ secrets.CLOUD_DEPLOY_URL }}/${{ matrix.package_name }}
+
+    - name: Run remote script
+      run: |
+        ssh ${{ secrets.DIGITAL_OCEAN_USER }}@${{ secrets.DIGITAL_OCEAN_HOST }} \
+        "/home/jhub/test.sh"
