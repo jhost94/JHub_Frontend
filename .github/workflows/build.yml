@@ -1,0 +1,59 @@
+name: Build
+
+concurrency:
+  group: ${{ github.ref_name }}
+  cancel-in-progress: false
+
+on:
+  workflow_call:
+
+jobs:
+  setup:
+    name: Workflow setup
+    runs-on: ${{ matrix.os }}
+    outputs:
+      branch: ${{ steps.extract_branch.outputs.branch }}
+    strategy:
+      matrix:
+        node_version: ['18']
+        os: [ubuntu-latest]
+        build_dir: ['./dist']
+        package_name: ['build.zip']
+
+    steps:
+    - name: Extract branch name
+      shell: bash
+      run: echo "branch=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_OUTPUT
+      id: extract_branch
+       
+  build:
+    name: Build
+    runs-on: ${{ matrix.os }}
+    needs: setup
+    strategy:
+      matrix:
+        node_version: ['18']
+        os: [ubuntu-latest]
+        build_dir: ['./dist']
+        package_name: ['build.zip']
+    outputs:
+      artifact-name: build-zip
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Use Node.js ${{ matrix.node_version }}
+      uses: actions/setup-node@v1 
+      with:
+        node-version: ${{ matrix.node_version }}
+
+    - name: npm install, build and test
+      run: |
+        npm install
+        npm run build
+        zip -r ${{ matrix.package_name }} ${{ matrix.build_dir }}
+    
+    - uses: actions/upload-artifact@v4
+      with:
+        name: ${{ matrix.package_name }}
+        path: ${{ matrix.package_name }}
+        retention-days: 1
