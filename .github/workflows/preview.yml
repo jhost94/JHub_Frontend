@@ -72,7 +72,12 @@ jobs:
         os: [ubuntu-latest]
         build_dir: ['./dist']
         package_name: ['build.zip']
+
+        
     steps:
+    - name: Setup Pages
+      uses: actions/configure-pages@v5
+
     - name: Download build
       uses: actions/download-artifact@v5
       id: deploy-download
@@ -86,13 +91,10 @@ jobs:
       env:
         PACKAGE_URL: ${{ steps.deploy-download.outputs.download-path }}/${{ matrix.package_name }}
 
-    - name: Setup Pages
-      uses: actions/configure-pages@v5
-
     - name: Upload Pages artifact
       uses: actions/upload-pages-artifact@v4
       with:
-        path: $GITHUB_WORKSPACE/site
+        path: $GITHUB_WORKSPACE/site/dist
         
     - name: Deploy
       id: pages-deploy
