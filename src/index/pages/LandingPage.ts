@@ -1,21 +1,21 @@
+import Div from "@jhub-center/jhostify-script/framework/components/external/basic/formatting/Div";
+import Footer from "@jhub-center/jhostify-script/framework/components/external/basic/formatting/Footer";
+import Header from "@jhub-center/jhostify-script/framework/components/external/basic/formatting/Header";
+import Nav from "@jhub-center/jhostify-script/framework/components/external/basic/formatting/Nav";
+import P from "@jhub-center/jhostify-script/framework/components/external/basic/formatting/P";
+import Section from "@jhub-center/jhostify-script/framework/components/external/basic/formatting/Section";
+import A from "@jhub-center/jhostify-script/framework/components/external/basic/link/A";
+import H1 from "@jhub-center/jhostify-script/framework/components/external/basic/text/H1";
+import H2 from "@jhub-center/jhostify-script/framework/components/external/basic/text/H2";
+import H3 from "@jhub-center/jhostify-script/framework/components/external/basic/text/H3";
 import Component from "@jhub-center/jhostify-script/framework/components/external/Component";
-import Page from "@jhub-center/jhostify-script/framework/page/external/Page";
-import Div from "@jhub-center/jhostify-script/framework/components/external/formatting/Div";
-import Header from "@jhub-center/jhostify-script/framework/components/external/formatting/Header";
-import Footer from "@jhub-center/jhostify-script/framework/components/external/formatting/Footer";
-import Nav from "@jhub-center/jhostify-script/framework/components/external/formatting/Nav";
-import Section from "@jhub-center/jhostify-script/framework/components/external/formatting/Section";
-import P from "@jhub-center/jhostify-script/framework/components/external/formatting/P";
-import H1 from "@jhub-center/jhostify-script/framework/components/external/text/H1";
-import H2 from "@jhub-center/jhostify-script/framework/components/external/text/H2";
-import H3 from "@jhub-center/jhostify-script/framework/components/external/text/H3";
-import A from "@jhub-center/jhostify-script/framework/components/external/link/A";
 import Css from "@jhub-center/jhostify-script/framework/components/external/Css";
+import Page from "@jhub-center/jhostify-script/framework/page/external/Page";
 
 class LandingPage extends Page {
 
     constructor() {
-        const components: Component[] = [];
+        let components: Component[] = [];
 
         // ############ HEADER
         const header = new Header();
